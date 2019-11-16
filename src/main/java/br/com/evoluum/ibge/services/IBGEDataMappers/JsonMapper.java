@@ -1,9 +1,7 @@
 package br.com.evoluum.ibge.services.IBGEDataMappers;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,7 +21,7 @@ public class JsonMapper implements IBGEDataMapper {
     }
 
     @Override
-    public void writeItem(OutputStream oStream, Municipio municipio) {
+    public void writeItem(OutputStream oStream, Municipio municipio, Boolean ultimo) {
         ObjectMapper jsonMapper = new ObjectMapper();
         try {
             Estado estado = municipio.getMicrorregiao().getMesorregiao().getUF();
@@ -38,6 +36,9 @@ public class JsonMapper implements IBGEDataMapper {
                         String.format("%s/%s", municipio.getNome(), estado.getNome())
                         )
                 );
+            if (!ultimo) {
+                oStream.write(",".getBytes());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

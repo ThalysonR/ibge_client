@@ -6,6 +6,6 @@ import br.com.evoluum.ibge.domain.Municipio;
 
 public interface IBGEDataMapper {
     public void writeStart(OutputStream outputStream);
-    public void writeItem(OutputStream oStream, Municipio municipio);
+    public void writeItem(OutputStream oStream, Municipio municipio, Boolean ultimo);
     public void writeEnd(OutputStream outputStream);
 }

@@ -19,7 +19,7 @@ public class CsvMapper implements IBGEDataMapper {
     }
 
     @Override
-    public void writeItem(OutputStream oStream, Municipio municipio) {
+    public void writeItem(OutputStream oStream, Municipio municipio, Boolean ultimo) {
         // TODO Auto-generated method stub
 
     }
