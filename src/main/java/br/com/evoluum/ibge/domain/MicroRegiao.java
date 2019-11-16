@@ -9,4 +9,5 @@ import lombok.experimental.FieldDefaults;
 public class MicroRegiao {
     Integer id;
     String nome;
+    MesoRegiao mesorregiao;
 }

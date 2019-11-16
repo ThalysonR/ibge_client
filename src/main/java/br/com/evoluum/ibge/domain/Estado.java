@@ -9,5 +9,6 @@ import lombok.experimental.FieldDefaults;
 public class Estado {
     Integer id;
     String sigla;
+    String nome;
     Regiao regiao;
 }

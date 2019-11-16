@@ -8,5 +8,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Regiao {
     Integer id;
+    String sigla;
     String nome;
 }
