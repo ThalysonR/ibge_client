@@ -5,10 +5,11 @@ import java.io.OutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.evoluum.ibge.domain.Estado;
 import br.com.evoluum.ibge.domain.Municipio;
 import br.com.evoluum.ibge.dto.IBGEResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JsonMapper implements IBGEDataMapper {
 
     @Override
@@ -16,7 +17,7 @@ public class JsonMapper implements IBGEDataMapper {
         try {
             outputStream.write("[".getBytes());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Falha ao escrever colchete da abertura da lista json", e);
         }
     }
 
@@ -24,23 +25,12 @@ public class JsonMapper implements IBGEDataMapper {
     public void writeItem(OutputStream oStream, Municipio municipio, Boolean ultimo) {
         ObjectMapper jsonMapper = new ObjectMapper();
         try {
-            Estado estado = municipio.getMicrorregiao().getMesorregiao().getUF();
-            jsonMapper.writeValue(
-                    oStream,
-                    new IBGEResponseDTO(
-                        estado.getId(),
-                        estado.getSigla(),
-                        estado.getRegiao().getNome(),
-                        municipio.getNome(),
-                        municipio.getMicrorregiao().getMesorregiao().getNome(),
-                        String.format("%s/%s", municipio.getNome(), estado.getNome())
-                        )
-                );
+            jsonMapper.writeValue(oStream, IBGEResponseDTO.fromMunicipio(municipio));
             if (!ultimo) {
                 oStream.write(",".getBytes());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Falha ao escrever objeto do json", e);
         }
     }
     
@@ -49,7 +39,7 @@ public class JsonMapper implements IBGEDataMapper {
         try {
             outputStream.write("]".getBytes());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Falha ao escrever colchete de encerramento da lista json", e);
         }
     }
 }
