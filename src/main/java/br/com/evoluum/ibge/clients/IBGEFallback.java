@@ -15,13 +15,13 @@ public class IBGEFallback implements IBGEClient {
 
     @Override
     public List<Estado> getEstados() {
-        log.info("Falha ao consultar estados");
+        log.warn("Falha ao consultar estados");
         return new ArrayList<>();
     }
 
     @Override
     public List<Municipio> getMunicipiosByUF(Integer idEstado) {
-        log.info(String.format("Falha ao consultar municipios do estado com id: %d", idEstado));
+        log.warn(String.format("Falha ao consultar municipios do estado com id: %d", idEstado));
         return new ArrayList<>();
     }
     

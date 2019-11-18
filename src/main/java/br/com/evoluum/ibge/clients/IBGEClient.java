@@ -10,7 +10,7 @@ import br.com.evoluum.ibge.clients.ClientURLs;
 import br.com.evoluum.ibge.domain.Estado;
 import br.com.evoluum.ibge.domain.Municipio;
 
-@FeignClient(name = "ws-ibge", url = ClientURLs.IBGE)
+@FeignClient(name = "ws-ibge", url = ClientURLs.IBGE, fallback = IBGEFallback.class)
 public interface IBGEClient {
     @GetMapping("/localidades/estados")
     List<Estado> getEstados();

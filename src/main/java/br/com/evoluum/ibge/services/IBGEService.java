@@ -25,10 +25,12 @@ public class IBGEService {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         input.mapper.writeStart(outputStream);
-        client.getEstados().forEach(estado -> {
-            List<Municipio> municipios = client.getMunicipiosByUF(estado.getId());
-            IntStream.range(0, municipios.size()).forEach(index -> {
-                input.mapper.writeItem(outputStream, municipios.get(index), index == (municipios.size() - 1));
+        List<Estado> estados = client.getEstados();
+        IntStream.range(0, estados.size()).forEach(iEstado -> {
+            List<Municipio> municipios = client.getMunicipiosByUF(estados.get(iEstado).getId());
+            IntStream.range(0, municipios.size()).forEach(iCidade -> {
+                Boolean ultimo = (iCidade == (municipios.size() - 1) && (iEstado == (estados.size() - 1)));
+                input.mapper.writeItem(outputStream, municipios.get(iCidade), ultimo);
             });
         });
         input.mapper.writeEnd(outputStream);
